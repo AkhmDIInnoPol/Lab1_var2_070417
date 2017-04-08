@@ -21,20 +21,20 @@ public class TextProcessor implements Runnable {
     /** General flag that show to all threads to do termination. */
     private static boolean isDuplicationMet;
 
-    /** Id for debug. Identify every thread. */
-    private final int threadId;
-
+    /** Count thread that ended their work. */
     private static int threadDoneCounter = 0;
 
+    /** Total number of running threads. */
     private static int totalThreadNum;
 
+    /** Notifier object for notifier thread about all thread done their work
+     * ot that duplication of has found and all thread terminated their work. */
     private Object mainThreadNotifier;
 
 
-    public TextProcessor(String reference, int threadId, Object mainThreadNotifier,
+    public TextProcessor(String reference, Object mainThreadNotifier,
                             int totalThreadNum) {
         this.reference = reference;
-        this.threadId = threadId;
         this.mainThreadNotifier = mainThreadNotifier;
         this.totalThreadNum = totalThreadNum;
     }
@@ -45,6 +45,8 @@ public class TextProcessor implements Runnable {
         String text = getTextFromSource();
 
         String[] words = getWordsFromText(text);
+
+//        System.out.println("Begin to store thread " + Thread.currentThread().getId() + "." );
 
         for (String word:words
                 ) {
@@ -58,6 +60,8 @@ public class TextProcessor implements Runnable {
 
             putNewWordInStore(word);
         }
+
+//        System.out.println("End to store thread " + Thread.currentThread().getId() + "." );
 
         notifyThisThreadDone();
     }
@@ -96,7 +100,7 @@ public class TextProcessor implements Runnable {
             if (wordsStore.contains(word))
             {
                 isDuplicationMet = true;
-                System.out.println("Word " + word + " is duplicated !!!.");
+                System.out.println("Word " + "\"" + word + "\"" + " is duplicated !!!.");
 
                 synchronized (mainThreadNotifier)
                 {

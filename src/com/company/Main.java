@@ -19,7 +19,7 @@ public class Main {
         for (int i = 0; i < externalRefs.length; i++)
         {
             Runnable runnable = new TextProcessor(
-                    externalRefs[i], i, thisThreadNotifier, externalRefs.length);
+                    externalRefs[i], thisThreadNotifier, externalRefs.length);
             executor.execute(runnable);
         }
 
