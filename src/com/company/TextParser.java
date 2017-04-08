@@ -3,6 +3,7 @@ package com.company;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -26,10 +27,15 @@ public class TextParser {
     public static String[] parseText(String text)
     {
         text = text.replaceAll("[^а-яА-Я| ]|", "");
-        String[] words = text.split("\\s+");  //
+        List<String> wordsList = new ArrayList<>(Arrays.asList(text.split("\\s+")));  //
+
+        wordsList.remove( "");
+
+        String[] words = Arrays.copyOf(wordsList.toArray(), wordsList.size(), String[].class);
 
         return words;
     }
+
 
 
 

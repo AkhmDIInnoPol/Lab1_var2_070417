@@ -9,7 +9,7 @@ public class Main {
 
     private static Object thisThreadNotifier = new Object();
 
-    private static String[] externalRefs = {"textFile1", "textFile2"};
+    private static String[] externalRefs = {"textFile1.txt", "textFile2.txt"};
 
 
     public static void main(String[] args) {
@@ -38,7 +38,7 @@ public class Main {
         {
             Set<String> newWordsStore = TextProcessor.getWordsStore();
 
-            System.out.println("New words: ");
+            System.out.println("New words: \n");
 
             for (String word:newWordsStore
                  ) {
