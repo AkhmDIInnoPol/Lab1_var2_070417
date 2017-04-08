@@ -24,10 +24,19 @@ public class TextProcessor implements Runnable {
     /** Id for debug. Identify every thread. */
     private final int threadId;
 
+    private static int threadDoneCounter = 0;
 
-    public TextProcessor(String reference, int threadId) {
+    private static int totalThreadNum;
+
+    private Object mainThreadNotifier;
+
+
+    public TextProcessor(String reference, int threadId, Object mainThreadNotifier,
+                            int totalThreadNum) {
         this.reference = reference;
         this.threadId = threadId;
+        this.mainThreadNotifier = mainThreadNotifier;
+        this.totalThreadNum = totalThreadNum;
     }
 
     @Override
@@ -50,7 +59,7 @@ public class TextProcessor implements Runnable {
             putNewWordInStore(word);
         }
 
-
+        notifyThisThreadDone();
     }
 
 
@@ -88,6 +97,12 @@ public class TextProcessor implements Runnable {
             {
                 isDuplicationMet = true;
                 System.out.println("Word " + word + " is duplicated !!!.");
+
+                synchronized (mainThreadNotifier)
+                {
+                    mainThreadNotifier.notify();
+                }
+
                 return;
             }
         }
@@ -106,6 +121,48 @@ public class TextProcessor implements Runnable {
         }
     }
 
+    /**
+     * Function increase counter of thread that done their work.
+     * When number of thread that finished work wil equal to
+     * total started threads (all thread ended their work)
+     * than last thread notify about it other external thread.
+     */
+    private void notifyThisThreadDone()
+    {
+        synchronized (wordsStore)
+        {
+            threadDoneCounter++;
+            if (threadDoneCounter == totalThreadNum)
+            {
+                synchronized (mainThreadNotifier)
+                {
+                    mainThreadNotifier.notify();
+                }
+            }
+        }
+    }
 
+    /**
+     * Function return main store of word.
+     * @return store of new russian words.
+     */
+    public static Set<String> getWordsStore()
+    {
+        return wordsStore;
+    }
+
+    /**
+     * Check if all thread ended their work.
+     * @return if true than all threads ended their work.
+     */
+    public static boolean isAllThreadDone()
+    {
+        if (threadDoneCounter == totalThreadNum)
+        {
+            return true;
+        }
+        else
+            return false;
+    }
 
 }
