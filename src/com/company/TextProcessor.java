@@ -72,7 +72,7 @@ public class TextProcessor implements Runnable {
 
     /**
      * Get text from some source. It may be file or http page
-     * or somthing else.
+     * or something else.
      * @return text from this source.
      */
     private String getTextFromSource()
@@ -153,9 +153,9 @@ public class TextProcessor implements Runnable {
      * Function return main store of word.
      * @return store of new russian words.
      */
-    public static Set<String> getWordsStore()
+    public static TreeSet<String> getWordsStore()
     {
-        return wordsStore;
+        return (TreeSet<String>) wordsStore;
     }
 
     /**
