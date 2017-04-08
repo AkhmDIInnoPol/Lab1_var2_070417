@@ -38,6 +38,8 @@ public class ReaderFromFile implements Reader {
             byte[] bytes = totalLine.getBytes("UTF-8");
             String text = new String(bytes, "UTF-8");
 
+            bufferedReader.close();
+
             return text;
         }
         catch (FileNotFoundException ex)
@@ -48,6 +50,7 @@ public class ReaderFromFile implements Reader {
         {
             ex.printStackTrace();
         }
+
 
 
         throw new IllegalStateException("Something wrong with getText method. " +

@@ -9,7 +9,7 @@ public class Main {
 
     private static Object thisThreadNotifier = new Object();
 
-    private static String[] externalRefs = {"textFile1.txt", "textFile2.txt"};
+    private static String[] externalRefs = {"textFile1.txt", "textFile2.txt", "textFile3.txt"};
 
 
     public static void main(String[] args) {
