@@ -2,6 +2,7 @@ package com.company;
 
 import com.company.SourceReader.Reader;
 import com.company.SourceReader.ReaderFromFile;
+import com.company.SourceReader.ReaderHttpTextFile;
 
 import java.util.Set;
 import java.util.TreeSet;
@@ -64,6 +65,8 @@ public class TextProcessor implements Runnable {
 //        System.out.println("End to store thread " + Thread.currentThread().getId() + "." );
 
         notifyThisThreadDone();
+
+
     }
 
 
@@ -74,7 +77,8 @@ public class TextProcessor implements Runnable {
      */
     private String getTextFromSource()
     {
-        Reader reader =new ReaderFromFile();
+        //Reader reader =new ReaderFromFile();
+        Reader reader =new ReaderHttpTextFile();
         return reader.getText(reference);
     }
 

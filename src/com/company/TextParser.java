@@ -26,7 +26,7 @@ public class TextParser {
      */
     public static String[] parseText(String text)
     {
-        text = text.replaceAll("[^а-яА-Я| ]|", "");
+        text = text.replaceAll("[^а-яА-Я|Ё|ё| ]|", "");
         List<String> wordsList = new ArrayList<>(Arrays.asList(text.split("\\s+")));  //
 
         wordsList.remove( "");
