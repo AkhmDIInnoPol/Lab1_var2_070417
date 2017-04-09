@@ -27,6 +27,8 @@ public class Main {
 
     public static void main(String[] args) {
 
+        double initTime = System.currentTimeMillis();
+
         ExecutorService executor = Executors.newFixedThreadPool(externalRefs.length);
 
         for (int i = 0; i < externalRefs.length; i++)
@@ -61,6 +63,9 @@ public class Main {
             }
 
             System.out.println("\nTotal unique words number = " + newWordsStore.size());
+
+            double endTime = System.currentTimeMillis();
+            System.out.println("Time duration: " + (endTime - initTime));
         }
 
 
