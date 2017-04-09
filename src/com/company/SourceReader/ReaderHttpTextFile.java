@@ -13,9 +13,9 @@ public class ReaderHttpTextFile implements Reader
 {
     /** Read line near middle of text because lines in the beginning are title
      * and contai only few words. */
-    private final int TEXT_LINE_NUMBER = 96;
+    private final int TEXT_LINE_NUMBER = 74;
 
-    /** Itis exception container for save intermediate exception stack trace. */
+    /** It is exception container for save intermediate exception stack trace. */
     private Exception exceptionStore;
 
     /**
