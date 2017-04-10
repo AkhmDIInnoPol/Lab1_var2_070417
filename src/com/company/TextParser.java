@@ -36,8 +36,43 @@ public class TextParser {
 
         String[] words = Arrays.copyOf(wordsList.toArray(), wordsList.size(), String[].class);
 
+        words = filterWordsWithDash(words);
+
         return words;
     }
+
+
+    /**
+     * Function filter words with dash.
+     * If word view as "word-word" than remain this word.
+     * If word view as "-word" ("word-") or other cases than delete all dashes in it.
+     * @param rawWords - raw words before processing.
+     * @return words after filter.
+     */
+    private static String[] filterWordsWithDash(String[] rawWords)
+    {
+//        Pattern pDashForward = Pattern.compile("^-+(\\p{L})+$");
+//        Pattern pDashBack = Pattern.compile("^+(\\p{L})+-$");
+        Pattern pDashBetween = Pattern.compile("^[а-яёА-ЯЁ]+-{1}+[а-яёА-ЯЁ]+$");
+
+        String[] processedWords = new String[rawWords.length];
+
+        for (int i = 0; i < rawWords.length; i++) {
+            Matcher mDashBetween  = pDashBetween.matcher(rawWords[i]);
+            if (!mDashBetween.matches())
+            {
+                processedWords[i] = rawWords[i].replaceAll("-*","");
+            }
+            else
+            {
+                processedWords[i] = rawWords[i];
+            }
+        }
+
+        return processedWords;
+    }
+
+
 
 
     /** Function return true if it is russian word, else (if foreign)
