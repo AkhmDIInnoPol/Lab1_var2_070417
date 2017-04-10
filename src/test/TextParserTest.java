@@ -32,6 +32,17 @@ public class TextParserTest
     }
 
 
+    @Test
+    public void isRussianWordTest()
+    {
+        String[] words = {"слово12", "русскоеСлово", "rusРус", "rus23", "23ffd", "ggHHff"};
+        boolean[] expectedRes = {true,     true,        false,    false,  false,   false};
+
+        for (int i = 0; i < words.length; i++)
+        {
+            assertTrue(expectedRes[i] == TextParser.isRussianWord(words[i]));
+        }
+    }
 
 
 

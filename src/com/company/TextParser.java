@@ -28,7 +28,7 @@ public class TextParser {
      */
     public static String[] parseText(String text)
     {
-        text = text.replaceAll("[^\\p{L}|\\-|\\d|_| ]", "");  //(?U)[^\w|-| ]  // [^а-яА-Я|Ё|ё|\d|a-zA-Z| ]|
+        text = text.replaceAll("[^\\p{L}|\\-|_| ]", "");  //(?U)[^\w|-| ]  // [^а-яА-Я|Ё|ё|\d|a-zA-Z| ]|
 
         List<String> wordsList = new ArrayList<>(Arrays.asList(text.split("\\s+")));  //
 
@@ -47,7 +47,7 @@ public class TextParser {
      */
     public static boolean isRussianWord(String word)
     {
-        Pattern pattern = Pattern.compile("[а-яА-Я|\\d|-]*");
+        Pattern pattern = Pattern.compile("[а-яА-Я|\\d|\\-|]*");
         Matcher matcher = pattern.matcher(word);
 
         return matcher.matches();

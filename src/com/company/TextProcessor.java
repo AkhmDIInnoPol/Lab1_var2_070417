@@ -132,7 +132,7 @@ public class TextProcessor implements Runnable {
         if (!TextParser.isRussianWord(word))
         {
             isIncorrectSymbolMet = true;
-            System.out.println("Incorrect symbol ecountered: " + word);
+            System.out.println("Incorrect symbol encountered: " + word);
 
             synchronized (mainThreadNotifier)
             {
