@@ -6,6 +6,8 @@ import com.company.SourceReader.Reader;
 
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Class run processing of external source and find from it russian words.
@@ -20,7 +22,10 @@ public class TextProcessor implements Runnable {
     private static Set<String> wordsStore = new TreeSet<>();
 
     /** General flag that show to all threads to do termination. */
-    private static boolean isDuplicationMet;
+    private static boolean isDuplicationMet = false;
+
+    /** Flag that show we encounter with symbol from other language than russian. */
+    private static boolean isIncorrectSymbolMet = false;
 
     /** Count thread that ended their work. */
     private static int threadDoneCounter = 0;
@@ -52,12 +57,14 @@ public class TextProcessor implements Runnable {
         for (String word:words
                 ) {
 
-            if (isDuplicationMet)
+            if (isDuplicationMet || isIncorrectSymbolMet)
             {
                 return;
             }
 
             isWordDuplicated(word);
+
+            isWordIncorrect(word);
 
             putNewWordInStore(word);
         }
@@ -114,6 +121,29 @@ public class TextProcessor implements Runnable {
             }
         }
     }
+
+
+    /**
+     * Function stop all threads if incorrect symbol encountered.
+     * @param word - word for checking.
+     */
+    private void isWordIncorrect(String word)
+    {
+        if (!TextParser.isRussianWord(word))
+        {
+            isIncorrectSymbolMet = true;
+            System.out.println("Incorrect symbol ecountered: " + word);
+
+            synchronized (mainThreadNotifier)
+            {
+                mainThreadNotifier.notify();
+            }
+
+            return;
+        }
+    }
+
+
 
 
     /**

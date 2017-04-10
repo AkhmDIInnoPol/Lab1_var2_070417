@@ -1,4 +1,4 @@
-package test;
+package test.SourceReader;
 
 
 
@@ -28,15 +28,11 @@ public class ExternalSourceSelectorTest
         String textUrlRef = "http://site.com/someFolder/subFolder/someName_23.txt";
         assertTrue(ExternalSourceSelector.getAppropriateReader(textUrlRef) instanceof ReaderHttpTextFile);
 
-        String unknownRef = "host:someSite/something/sub/end.doc";
+        String unknownRef = "host:someSite/something/sub/end.txt";
         Throwable exception = assertThrows(IllegalArgumentException.class, ()->
                             ExternalSourceSelector.getAppropriateReader(unknownRef));
         assertTrue(exception.getMessage().equals("Unknown reference type"));
     }
-
-
-
-
 
 
 
