@@ -28,7 +28,7 @@ public class ExternalSourceSelector
             return new ReaderFromFile();
         }
 
-        throw new IllegalArgumentException("Uknown reference type");
+        throw new IllegalArgumentException("Unknown reference type");
     }
 
 
@@ -39,7 +39,7 @@ public class ExternalSourceSelector
      */
     private static boolean isTxtFile(String ref)
     {
-        Pattern pattern = Pattern.compile(".*.\\.txt*$");
+        Pattern pattern = Pattern.compile("[a-zA-z|\\d|[ф-яА-Я]]*.\\.txt*$");
         Matcher matcher = pattern.matcher(ref);
 
         return matcher.matches();

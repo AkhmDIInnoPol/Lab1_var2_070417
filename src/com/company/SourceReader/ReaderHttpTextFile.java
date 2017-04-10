@@ -19,7 +19,7 @@ public class ReaderHttpTextFile implements Reader
     private Exception exceptionStore;
 
     /**
-     * Function get text from url and from this tect get specified in
+     * Function get text from url and from this text get specified in
      * {@link #TEXT_LINE_NUMBER} row number.
      * @param reference - url of internet resource.
      * @return - piece of text of this resource.
