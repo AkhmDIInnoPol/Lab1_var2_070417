@@ -22,8 +22,7 @@ public class ExternalSourceSelector
         {
             return new ReaderHttpTextFile();
         }
-
-        if (isTxtFile(reference))
+        else if (isTxtFile(reference))
         {
             return new ReaderFromFile();
         }
@@ -39,7 +38,7 @@ public class ExternalSourceSelector
      */
     private static boolean isTxtFile(String ref)
     {
-        Pattern pattern = Pattern.compile("[a-zA-z|\\d|[ф-яА-Я]]*.\\.txt*$");
+        Pattern pattern = Pattern.compile("^.*.txt*$"); // [a-zA-z|\d|[ф-яА-Я]]*.\.txt*$
         Matcher matcher = pattern.matcher(ref);
 
         return matcher.matches();

@@ -28,7 +28,7 @@ public class TextProcessor implements Runnable {
     private static boolean isIncorrectSymbolMet = false;
 
     /** Count thread that ended their work. */
-    private static int threadDoneCounter = 0;
+    private volatile static int threadDoneCounter = 0;
 
     /** Total number of running threads. */
     private static int totalThreadNum;
@@ -57,16 +57,16 @@ public class TextProcessor implements Runnable {
         for (String word:words
                 ) {
 
-            if (isDuplicationMet || isIncorrectSymbolMet)
-            {
-                return;
-            }
-
             isWordDuplicated(word);
 
             isWordIncorrect(word);
 
             putNewWordInStore(word);
+
+            if (isDuplicationMet || isIncorrectSymbolMet)
+            {
+                return;
+            }
         }
 
 //        System.out.println("End to store thread " + Thread.currentThread().getId() + "." );

@@ -4,6 +4,8 @@ package test;
 import com.company.TextParser;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -44,6 +46,39 @@ public class TextParserTest
         }
     }
 
+
+    @Test
+    public void filterWordsWithDashTest()
+    {
+        String[] wordsForTest = {"-хорошо", "плохо-", "хорошо-плохо", "очень хорошо"};
+        String[] expectedWordsAfterFilter = {"хорошо", "плохо", "хорошо-плохо", "очень хорошо"};
+
+        try {
+            Method filterWordsWithDash = TextParser.class.getDeclaredMethod("filterWordsWithDash", wordsForTest.getClass());
+            filterWordsWithDash.setAccessible(true);
+            String[] wordsAfterFilter = (String[]) filterWordsWithDash.invoke(null, ((Object[])wordsForTest) );
+
+            for(int i = 0; i < wordsAfterFilter.length; i++)
+            {
+                assertTrue(wordsAfterFilter[i].equals(expectedWordsAfterFilter[i]));
+            }
+        }
+        catch (NoSuchMethodException ex)
+        {
+            ex.printStackTrace();
+        }
+        catch (IllegalAccessException ex)
+        {
+            ex.printStackTrace();
+        }
+        catch (InvocationTargetException ex)
+        {
+            ex.printStackTrace();
+        }
+
+
+
+    }
 
 
 }

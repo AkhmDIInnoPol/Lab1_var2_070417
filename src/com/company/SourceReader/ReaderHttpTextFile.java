@@ -7,22 +7,25 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * Class get text from text file through http url.
+ * Class get textLineNumber from textLineNumber file through http url.
  */
 public class ReaderHttpTextFile implements Reader
 {
-    /** Read line near middle of text because lines in the beginning are title
+    /** Read line near middle of textLineNumber because lines in the beginning are title
      * and contai only few words. */
-    private final int TEXT_LINE_NUMBER = 74;
+    private static int textLineNumber = 74;
 
     /** It is exception container for save intermediate exception stack trace. */
     private Exception exceptionStore;
 
+    /** Encoding type of http resources. */
+    private static String sEncoding = "windows-1251";
+
     /**
-     * Function get text from url and from this text get specified in
-     * {@link #TEXT_LINE_NUMBER} row number.
+     * Function get textLineNumber from url and from this textLineNumber get specified in
+     * {@link #textLineNumber} row number.
      * @param reference - url of internet resource.
-     * @return - piece of text of this resource.
+     * @return - piece of textLineNumber of this resource.
      */
     @Override
     public String getText(String reference) {
@@ -32,12 +35,12 @@ public class ReaderHttpTextFile implements Reader
 
         try {
                 URL oracle = new URL(reference);
-                BufferedReader in = new BufferedReader(new InputStreamReader(oracle.openStream(), "windows-1251"));
+                BufferedReader in = new BufferedReader(new InputStreamReader(oracle.openStream(), sEncoding));
 
                 String inputLine;
                 while ((inputLine = in.readLine()) != null)
                 {
-                    if (lineCounter == TEXT_LINE_NUMBER)
+                    if (lineCounter == textLineNumber)
                     {
                         in.close();
                         return inputLine;
@@ -61,6 +64,21 @@ public class ReaderHttpTextFile implements Reader
 
 
         throw new IllegalStateException("Something wrong with getText method. " +
-                "It doesn't return text from http url.");
+                "It doesn't return textLineNumber from http url.");
     }
+
+
+
+
+    public static void setEncoding(String encoding)
+    {
+        sEncoding = encoding;
+    }
+
+
+    public static void setTextLineNumber(int lineNum)
+    {
+        textLineNumber = lineNum;
+    }
+
 }
